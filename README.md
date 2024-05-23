@@ -12,14 +12,9 @@ This is a web application that allows users to solve their Rubik's Cube puzzles.
 - Step-by-step solution
 - Random solvable cube generation
 
-## Installation
+## Visit
+https://cubeconqueror.com/
 
-Provide instructions on how to install and run your application. This might include steps like:
-
-1. Clone the repository: `git clone https://github.com/sophiakobzar/cubeSolver.git`
-2. Navigate to the project directory: `cd rubiks-cube-solver`
-3. Install dependencies: `npm install` (if you're using Node.js)
-4. Start the server: `npm start` (if you're using Node.js)
 
 ## Usage
 
