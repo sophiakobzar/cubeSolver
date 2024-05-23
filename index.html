@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Rubik's Cube Solver</h2>
+
+<button onclick="shuffleCube()">Generate Random Cube</button>
+
+<script>
+// Representation of the cube
+let cube = [
+  ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+  ['red', 'red', 'red', 'red', 'red', 'red', 'red', 'red', 'red'],
+  // ... repeat for each color
+];
+
+function shuffleCube() {
+  // Apply a series of random rotations to the cube
+  for (let i = 0; i < 100; i++) {
+    let randomMove = Math.floor(Math.random() * 6);
+    switch(randomMove) {
+      case 0:
+        // Rotate top face clockwise
+        break;
+      case 1:
+        // Rotate top face counter-clockwise
+        break;
+      // ... repeat for each possible move
+    }
+  }
+}
+</script>
+
+</body>
+</html>
+
