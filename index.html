@@ -6,12 +6,12 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<header style="color: white; background-color: black; padding: 10px; text-align: center;">
+
+<div style="color: white; background-color: black; padding: 5px; text-align: center;">
     <h1 style="font-size: 1.5em;">Welcome to Cube Conqueror!</h1>
     <p style="font-size: 0.8em;">Unleash your inner puzzle master as you shuffle and solve a Rubik’s Cube. I am currently enhancing the site by developing a ‘Solve’ button. This feature, which is under construction, will provide you with step-by-step solutions to unravel the mystery of the cube.</p>
     <p style="font-size: 0.8em;"><strong>Stay tuned for this exciting update, expected to be launched by the end of July 2024!</strong></p>
-</header>
-
+</div>
 
 <div class="scene" id="scene">
 <div class="pivot centered" id="pivot" style="transform: rotateX(-35deg) rotateY(-135deg);">
@@ -237,7 +237,7 @@
 
 <button id="solveButton" style="position: absolute; bottom: 65px; right: 10px; color: white; background-color: black; z-index: 1;">Solve Cube</button>
 
-<footer style="color: white; background-color: black; position: absolute; bottom: 0; width: 100%; text-align: center;">
+<footer style="color: white; position: absolute; bottom: 0; width: 100%; text-align: center;">
   <p>Built by Sophia Kobzar</p>
 </footer>
 
@@ -280,5 +280,11 @@ function solveCube() {
 
 
 </script>
+<style>
+  .scene {
+    margin-top: -100px; /* Adjust this value to bring the cube closer to the header */
+  }
+</style>
+
 </body>
 </html>
