@@ -242,8 +242,36 @@ document.getElementById('solveButton').addEventListener('click', function() {
 });
 
 function solveCube() {
-      solveCross(); // Solve the cross
+    // Create a new Cube instance
+    //var cube = new Cube();
+
+    // Generate the graph for the current state of the cube
+    //cube.generateGraph(actions);
+
+    // For each piece in the first layer
+    //for (var i = 0; i < 8; i++) {
+     //   var piece = cube.cubelets[i];
+        // If the piece is out of place
+      //  if (!piece.pos.equals(piece.startpos)) {
+            // Find the rotations to move it to the correct position
+        //    var rotations = cube.pathfind3d(piece.startpos);
+            // Apply the rotations
+        //    cube.apply(rotations);
+
+            // Now, use these rotations to animate the cube
+          //  for (var j = 0; j < rotations.length; j++) {
+                // You'll need to convert the rotation from your pathfinding algorithm
+                // into a format that animateRotation() can understand
+         //       var face = convertToFace(rotations[j]);
+         //       var cw = convertToClockwise(rotations[j]);
+          //      animateRotation(face, cw, Date.now());
+          //  }
+        //}
+    //}
+
+    // Repeat a similar process for the second and third layers.
 }
+
 
 </script>
 </body>
