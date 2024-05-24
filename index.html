@@ -2,10 +2,11 @@
 <html lang="en" >
 <head>
 <meta charset="UTF-8">
-<title>Rubik&#39;s cube in Javascript</title>
+<title>Rubik&#39;s cube</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="./style.css">
 </head>
 <body>
+
 <div class="scene" id="scene">
 <div class="pivot centered" id="pivot" style="transform: rotateX(-35deg) rotateY(-135deg);">
 <div class="cube" id="cube">
@@ -226,10 +227,23 @@
 <div class="anchor" id="anchor1" style="transform: translateZ(3px) translateY(-33.33%) rotate(-90deg) translateY(66.67%)"></div>
 <div class="anchor" id="anchor0" style="transform: translateZ(3px) translateY(-33.33%) rotate(0deg) translateY(66.67%)"></div>
 </div>
+
+
+<button id="solveButton" style="position: absolute; bottom: 65px; right: 10px; color: white; background-color: black; z-index: 1;">Solve Cube</button>
+
 <footer style="color: white; background-color: black; position: absolute; bottom: 0; width: 100%; text-align: center;">
   <p>Built by Sophia Kobzar</p>
 </footer>
 
 <script src="./script.js"></script>
+<script>
+     document.getElementById('solveButton').addEventListener('click', function() {
+        solveCube();
+    });
+
+    function solveCube() {
+        // Your solving logic here
+    }
+</script>
 </body>
 </html>
