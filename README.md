@@ -16,15 +16,4 @@ This is a web application that allows users to solve their Rubik's Cube puzzles.
 https://cubeconqueror.com/
 
 
-## Usage
-
-Explain how to use your application. For example, you might explain how to input a cube configuration, how to start the solving process, and how to generate a random cube.
-
-## Contributing
-
-If you're open to contributions, provide guidelines on how others can contribute to your project. This might include steps for creating a fork, creating a branch, making changes, and submitting a pull request.
-
-## License
-
-Include information about the license your project is distributed under.
 
