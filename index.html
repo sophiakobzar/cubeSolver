@@ -237,13 +237,23 @@
 
 <script src="./script.js"></script>
 <script>
-     document.getElementById('solveButton').addEventListener('click', function() {
-        solveCube();
-    });
 
-    function solveCube() {
-        // Your solving logic here
+var recordedMoves = []; // Define recordedMoves array globally
+
+document.getElementById('solveButton').addEventListener('click', function() {
+    solveCube();
+});
+
+function solveCube() {
+    // Undo recorded moves in reverse order
+    for (var i = recordedMoves.length - 1; i >= 0; i--) {
+        var move = recordedMoves[i];
+        animateRotation(move.face, !move.cw, Date.now());
     }
+    // Clear the recorded moves list
+    recordedMoves = [];
+}
+
 </script>
 </body>
 </html>
