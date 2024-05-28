@@ -1,5 +1,7 @@
 var colors = ['blue', 'green', 'white', 'yellow', 'orange', 'red'],
     pieces = document.getElementsByClassName('piece');
+	
+var _2DCube;
 class Sticker {
     constructor(color, position) {
         this.color = color;
@@ -48,6 +50,9 @@ function swapPieces(face, times) {
                     sticker2.className = className;
         }
     }
+
+    // Update the 2D cube state and log it
+    update2DCube(face, times % 2 === 1); // times % 2 === 1 indicates a 90-degree rotation
 }
 
 function animateRotation(face, cw, currentTime) {
@@ -61,11 +66,14 @@ function animateRotation(face, cw, currentTime) {
         qubes.forEach(function (piece) {
             piece.style.transform = piece.style.transform.replace(/rotate.(\S+)/, style);
         });
-        if (passed >= 300)
-            return swapPieces(face, 3 - 2 * cw);
-        requestAnimationFrame(rotatePieces);
+        if (passed >= 300) {
+            swapPieces(face, 3 - 2 * cw);
+        } else {
+            requestAnimationFrame(rotatePieces);
+        }
     })();
 }
+
 
 function mousedown(md_e) {
     var startXY = pivot.style.transform.match(/-?\d+\.?\d*/g).map(Number),
@@ -100,73 +108,6 @@ function mousedown(md_e) {
     scene.removeEventListener('mousedown', mousedown);
 }
 
-function parseCubeState() {
-    const cubeState = Array(6).fill(null).map(() => Array(9).fill(''));
-    const faceMap = {
-        'left': 4,
-        'right': 1,
-        'top': 2,
-        'bottom': 3,
-        'back': 0,
-        'front': 5
-    };
-
-    Array.from(pieces).forEach(piece => {
-        const [x, y, z] = determinePieceIndex(piece);
-        Array.from(piece.children).forEach(face => {
-            if (face.firstChild) {
-                const colorClass = face.firstChild.className.split(' ').pop();
-                const colorCode = {
-                    'white': 'W',
-                    'orange': 'O',
-                    'green': 'G',
-                    'red': 'R',
-                    'blue': 'B',
-                    'yellow': 'Y'
-                }[colorClass];
-                
-                const faceIndex = faceMap[face.className.split(' ')[1]];
-                const stickerIndex = x + y * 3; // Convert x,y to a single index
-				console.log(`face Index: ${faceIndex}`);
-				console.log(`sticker Index: ${stickerIndex}`);
-				
-                // Print debug information
-				//console.log(`Piece label: ${piece.dataset.label}`);
-                //console.log(`Sticker index: ${stickerIndex}`);
-                console.log(`Color: ${colorCode}`);
-				//console.log(`Face index: ${faceIndex}`);
-                //console.log(`Location: (${x}, ${y}, ${z})`);
-                cubeState[faceIndex][stickerIndex] = new Sticker(colorCode, [x, y, z]);
-            }
-        });
-    });
-	//console.log(cubeState);
-    return cubeState;
-}
-
-
-function determinePieceIndex(piece) {
-    const index = Array.prototype.indexOf.call(pieces, piece);
-
-    // Mapping piece index to face indices
-    const pieceFaceIndices = {
-        0: [0, 0, 0], 1: [1, 0, 0], 2: [2, 0, 0],
-        3: [1, 1, 0], 4: [1, 1, 0], 5: [2, 1, 0],
-        6: [0, 2, 0], 7: [1, 2, 0], 8: [2, 2, 0],
-
-        9: [0, 0, 1], 10: [1, 0, 1], 11: [2, 0, 1],
-        12: [0, 1, 1], 13: [1, 1, 1], 14: [2, 1, 1],
-        15: [0, 2, 1], 16: [1, 2, 1], 17: [2, 2, 1],
-
-        18: [0, 0, 2], 19: [1, 0, 2], 20: [2, 0, 2],
-        21: [0, 1, 2], 22: [1, 1, 2], 23: [2, 1, 2],
-        24: [0, 2, 2], 25: [1, 2, 2]
-    };
-
-    return pieceFaceIndices[index];
-}
-
-
 function convertToImportString(cubeState) {
     const rows = [];
 
@@ -192,7 +133,7 @@ function convertToImportString(cubeState) {
 
     return rows.join('\n');
 }
- function getCubeState() {
+ function getInitialCubeState() {
     return [
         [ // Left face (index 0)
             { color: 'O' }, { color: 'O' }, { color: 'O' },
@@ -226,20 +167,78 @@ function convertToImportString(cubeState) {
         ]
     ];
 }
+
+function update2DCube(face, clockwise) {
+    const faceMap = {
+        0: [2, 3, 4, 5], // Left face affects top, bottom, back, and front faces
+        1: [2, 5, 3, 4], // Right face affects top, front, bottom, and back faces
+        2: [0, 5, 1, 4], // Top face affects left, front, right, and back faces
+        3: [0, 4, 1, 5], // Bottom face affects left, back, right, and front faces
+        4: [2, 0, 3, 1], // Back face affects top, left, bottom, and right faces
+        5: [2, 1, 3, 0]  // Front face affects top, right, bottom, and left faces
+    };
+
+    const rowMap = {
+        0: [[6, 3, 0], [8, 5, 2]], // Left face row positions
+        1: [[8, 5, 2], [6, 3, 0]], // Right face row positions
+        2: [[0, 1, 2], [0, 1, 2]], // Top face row positions
+        3: [[6, 7, 8], [6, 7, 8]], // Bottom face row positions
+        4: [[0, 3, 6], [8, 5, 2]], // Back face row positions
+        5: [[8, 7, 6], [0, 3, 6]]  // Front face row positions
+    };
+
+    function rotateFace(faceArray, cw) {
+        const rotated = new Array(9);
+        const map = cw ? [6, 3, 0, 7, 4, 1, 8, 5, 2] : [2, 5, 8, 1, 4, 7, 0, 3, 6];
+        for (let i = 0; i < 9; i++) {
+            rotated[i] = faceArray[map[i]];
+        }
+        return rotated;
+    }
+
+    // Rotate the main face
+    _2DCube[face] = rotateFace(_2DCube[face], clockwise);
+
+    // Update the adjacent rows
+    const adjacentFaces = faceMap[face];
+    const currentRows = adjacentFaces.map((adjFace, i) => {
+        const row = rowMap[face][i % 2];
+        return row.map(index => _2DCube[adjFace][index]);
+    });
+
+    if (clockwise) {
+        for (let i = 0; i < 4; i++) {
+            const next = (i + 1) % 4;
+            const row = rowMap[face][i % 2];
+            row.forEach((index, j) => {
+                _2DCube[adjacentFaces[next]][index] = currentRows[i][j];
+            });
+        }
+    } else {
+        for (let i = 3; i >= 0; i--) {
+            const next = (i + 1) % 4;
+            const row = rowMap[face][i % 2];
+            row.forEach((index, j) => {
+                _2DCube[adjacentFaces[next]][index] = currentRows[i][j];
+            });
+        }
+    }
+
+    // Log the updated 2D cube state
+    console.log('Updated _2DCube state:', _2DCube);
+}
+
+
 function solveCube() {
     console.log('Solve function called');
-	const cubeState = parseCubeState();
-	const importString = convertToImportString(cubeState);
-    console.log("We get");
-	console.log(importString);
-	console.log("We needed");
-	const cubeState2 = getCubeState();
-	const importString2 = convertToImportString(cubeState2);
-    console.log(importString2);
-    return importString;
 }
 
 document.ondragstart = function () { return false; }
-window.addEventListener('load', assembleCube);
+window.addEventListener('load', function() {
+    assembleCube();
+     _2DCube = getInitialCubeState();
+	 console.log(_2DCube)
+});
+
 scene.addEventListener('mousedown', mousedown);
 document.getElementById('solveButton').addEventListener('click', solveCube);
