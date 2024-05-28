@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,283 +7,272 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-
 <div style="color: white; background-color: black; padding: 5px; text-align: center;">
     <h1 style="font-size: 1.5em;">Welcome to Cube Conqueror!</h1>
-    <p style="font-size: 0.8em;">Unleash your inner puzzle master as you shuffle and solve a Rubik’s Cube. I am currently enhancing the site by developing a ‘Solve’ button. This feature, which is under construction, will provide you with step-by-step solutions to unravel the mystery of the cube.</p>
-    <p style="font-size: 0.8em;"><strong>Stay tuned for this exciting update, expected to be launched by the end of July 2024!</strong></p>
+</div>
+<!--
+<div>
+    <div id="rotbtncontainer"></div>
+    <div id="invrotbtncontainer"></div>
+    <div id="doublerotbtncontainer"></div>
+    <div id="specialbtncontainer"></div>
+    <div>
+        <div> 
+            <label for="seedvalue">RNG seed value</label>
+            <input value="0" type="number" id="seedvalue">
+        </div>
+        <div>
+            <label for="perspectiveSelect">Select perspective</label>
+            <select id="perspectiveSelect">
+                <option value="F">F</option>
+                <option value="B">B</option>
+                <option value="R">R</option>
+                <option value="L">L</option>
+                <option value="U">U</option>
+                <option value="D">D</option>
+                <option value="I">I</option>
+            </select>
+        </div>
+    </div>
+    <div style="color:red;" id="erroroutput"></div>
+    <textarea rows="10" cols="70" id="outputinput" style="position: relative; z-index: 10;"></textarea>
 </div>
 
-<div class="scene" id="scene">
-<div class="pivot centered" id="pivot" style="transform: rotateX(-35deg) rotateY(-135deg);">
-<div class="cube" id="cube">
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
+<script src="https://cdn.jsdelivr.net/npm/quaternion@1.2.1/quaternion.js"></script>
+<script src="package.js"></script>
+-->
+<div class="scene" id="scene" style="position: relative; z-index: 1;">
+    <div class="pivot centered" id="pivot" style="transform: translateX(20px) rotateX(-35deg) rotateY(-135deg);">
+        <div class="cube" id="cube">
+            	<div class="piece" data-label="0">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="1">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="2">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="3">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="4">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece"data-label="5">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="6">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="7">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="8">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="9">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="10">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="11">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="12">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="13">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="14">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="15">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="16">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece"data-label="17"> 
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="18">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="19">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="20">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="21">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="22">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="23">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="24">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+				<div class="piece" data-label="25">
+				<div class="element left"></div>
+				<div class="element right"></div>
+				<div class="element top"></div>
+				<div class="element bottom"></div>
+				<div class="element back"></div>
+				<div class="element front"></div>
+				</div>
+        </div>
+    </div>
 </div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-<div class="piece">
-<div class="element left"></div>
-<div class="element right"></div>
-<div class="element top"></div>
-<div class="element bottom"></div>
-<div class="element back"></div>
-<div class="element front"></div>
-</div>
-</div>
-</div>
-</div>
+
 <div id="guide">
-<div class="anchor" id="anchor3" style="transform: translateZ(3px) translateY(-33.33%) rotate(-270deg) translateY(66.67%)"></div>
-<div class="anchor" id="anchor2" style="transform: translateZ(3px) translateY(-33.33%) rotate(-180deg) translateY(66.67%)"></div>
-<div class="anchor" id="anchor1" style="transform: translateZ(3px) translateY(-33.33%) rotate(-90deg) translateY(66.67%)"></div>
-<div class="anchor" id="anchor0" style="transform: translateZ(3px) translateY(-33.33%) rotate(0deg) translateY(66.67%)"></div>
+    <div class="anchor" id="anchor3" style="transform: translateZ(3px) translateY(-33.33%) rotate(-270deg) translateY(66.67%)"></div>
+    <div class="anchor" id="anchor2" style="transform: translateZ(3px) translateY(-33.33%) rotate(-180deg) translateY(66.67%)"></div>
+    <div class="anchor" id="anchor1" style="transform: translateZ(3px) translateY(-33.33%) rotate(-90deg) translateY(66.67%)"></div>
+    <div class="anchor" id="anchor0" style="transform: translateZ(3px) translateY(-33.33%) rotate(0deg) translateY(66.67%)"></div>
 </div>
-
-
-<button id="solveButton" style="position: absolute; bottom: 65px; right: 10px; color: white; background-color: black; z-index: 1;">Solve Cube</button>
+<button id="solveButton" style="position: absolute; right: 10px; color: white; background-color: black; z-index: 1;">Solve Cube</button>
 
 <footer style="color: white; position: absolute; bottom: 0; width: 100%; text-align: center;">
   <p>Built by Sophia Kobzar</p>
 </footer>
 
 <script src="./script.js"></script>
-<script>
-document.getElementById('solveButton').addEventListener('click', function() {
-    solveCube();
-});
 
-function solveCube() {
-    // Create a new Cube instance
-    //var cube = new Cube();
-
-    // Generate the graph for the current state of the cube
-    //cube.generateGraph(actions);
-
-    // For each piece in the first layer
-    //for (var i = 0; i < 8; i++) {
-     //   var piece = cube.cubelets[i];
-        // If the piece is out of place
-      //  if (!piece.pos.equals(piece.startpos)) {
-            // Find the rotations to move it to the correct position
-        //    var rotations = cube.pathfind3d(piece.startpos);
-            // Apply the rotations
-        //    cube.apply(rotations);
-
-            // Now, use these rotations to animate the cube
-          //  for (var j = 0; j < rotations.length; j++) {
-                // You'll need to convert the rotation from your pathfinding algorithm
-                // into a format that animateRotation() can understand
-         //       var face = convertToFace(rotations[j]);
-         //       var cw = convertToClockwise(rotations[j]);
-          //      animateRotation(face, cw, Date.now());
-          //  }
-        //}
-    //}
-
-    // Repeat a similar process for the second and third layers.
-}
-
-
-</script>
 <style>
   .scene {
-    margin-top: -100px; /* Adjust this value to bring the cube closer to the header */
+    margin-top: -100px;
   }
 </style>
 
