@@ -10,37 +10,7 @@
 <div style="color: white; background-color: black; padding: 5px; text-align: center;">
     <h1 style="font-size: 1.5em;">Welcome to Cube Conqueror!</h1>
 </div>
-<!--
-<div>
-    <div id="rotbtncontainer"></div>
-    <div id="invrotbtncontainer"></div>
-    <div id="doublerotbtncontainer"></div>
-    <div id="specialbtncontainer"></div>
-    <div>
-        <div> 
-            <label for="seedvalue">RNG seed value</label>
-            <input value="0" type="number" id="seedvalue">
-        </div>
-        <div>
-            <label for="perspectiveSelect">Select perspective</label>
-            <select id="perspectiveSelect">
-                <option value="F">F</option>
-                <option value="B">B</option>
-                <option value="R">R</option>
-                <option value="L">L</option>
-                <option value="U">U</option>
-                <option value="D">D</option>
-                <option value="I">I</option>
-            </select>
-        </div>
-    </div>
-    <div style="color:red;" id="erroroutput"></div>
-    <textarea rows="10" cols="70" id="outputinput" style="position: relative; z-index: 10;"></textarea>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/quaternion@1.2.1/quaternion.js"></script>
-<script src="package.js"></script>
--->
 <div class="scene" id="scene" style="position: relative; z-index: 1;">
     <div class="pivot centered" id="pivot" style="transform: translateX(20px) rotateX(-35deg) rotateY(-135deg);">
         <div class="cube" id="cube">
@@ -262,9 +232,9 @@
     <div class="anchor" id="anchor1" style="transform: translateZ(3px) translateY(-33.33%) rotate(-90deg) translateY(66.67%)"></div>
     <div class="anchor" id="anchor0" style="transform: translateZ(3px) translateY(-33.33%) rotate(0deg) translateY(66.67%)"></div>
 </div>
-<button id="solveButton" style="position: absolute; right: 10px; color: white; background-color: black; z-index: 1;">Solve Cube</button>
+<button id="solveButton" style="position: absolute; bottom: 10px; right: 10px; color: white; background-color: black; z-index: 1;">Solve Cube</button>
 
-<footer style="color: white; position: absolute; bottom: 0; width: 100%; text-align: center;">
+<footer style="color: white; position: absolute; bottom: 10px; width: 100%; text-align: center;">
   <p>Built by Sophia Kobzar</p>
 </footer>
 
@@ -272,7 +242,7 @@
 
 <style>
   .scene {
-    margin-top: -100px;
+    margin-top: -80px;
   }
 </style>
 

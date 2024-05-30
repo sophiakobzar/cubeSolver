@@ -50,9 +50,6 @@ function swapPieces(face, times) {
                     sticker2.className = className;
         }
     }
-
-    // Update the 2D cube state and log it
-    update2DCube(face, times % 2 === 1); // times % 2 === 1 indicates a 90-degree rotation
 }
 
 function animateRotation(face, cw, currentTime) {
@@ -108,126 +105,6 @@ function mousedown(md_e) {
     scene.removeEventListener('mousedown', mousedown);
 }
 
-function convertToImportString(cubeState) {
-    const rows = [];
-
-    // Top face (index 2)
-    for (let i = 0; i < 3; i++) {
-        rows.push(cubeState[2].slice(i * 3, i * 3 + 3).map(sticker => sticker.color).join(','));
-    }
-
-    // Middle part: Left, Front, Right, Back faces (indices 0, 5, 1, 4)
-    for (let i = 0; i < 3; i++) {
-        const row = [];
-        row.push(cubeState[0].slice(i * 3, i * 3 + 3).map(sticker => sticker.color).join(','));
-        row.push(cubeState[5].slice(i * 3, i * 3 + 3).map(sticker => sticker.color).join(','));
-        row.push(cubeState[1].slice(i * 3, i * 3 + 3).map(sticker => sticker.color).join(','));
-        row.push(cubeState[4].slice(i * 3, i * 3 + 3).map(sticker => sticker.color).join(','));
-        rows.push(row.join(','));
-    }
-
-    // Bottom face (index 3)
-    for (let i = 0; i < 3; i++) {
-        rows.push(cubeState[3].slice(i * 3, i * 3 + 3).map(sticker => sticker.color).join(','));
-    }
-
-    return rows.join('\n');
-}
- function getInitialCubeState() {
-    return [
-        [ // Left face (index 0)
-            { color: 'O' }, { color: 'O' }, { color: 'O' },
-            { color: 'O' }, { color: 'O' }, { color: 'O' },
-            { color: 'O' }, { color: 'O' }, { color: 'O' }
-        ],
-        [ // Right face (index 1)
-			{ color: 'R' }, { color: 'R' }, { color: 'R' },
-            { color: 'R' }, { color: 'R' }, { color: 'R' },
-            { color: 'R' }, { color: 'R' }, { color: 'R' }
-        ],
-        [ // Top face (index 2)
-            { color: 'W' }, { color: 'W' }, { color: 'W' },
-            { color: 'W' }, { color: 'W' }, { color: 'W' },
-            { color: 'W' }, { color: 'W' }, { color: 'W' }
-        ],
-        [ // Bottom face (index 3)
-            { color: 'Y' }, { color: 'Y' }, { color: 'Y' },
-            { color: 'Y' }, { color: 'Y' }, { color: 'Y' },
-            { color: 'Y' }, { color: 'Y' }, { color: 'Y' }
-        ],
-        [ // Back face (index 4)
-            { color: 'B' }, { color: 'B' }, { color: 'B' },
-            { color: 'B' }, { color: 'B' }, { color: 'B' },
-            { color: 'B' }, { color: 'B' }, { color: 'B' }
-        ],
-        [ // Front face (index 5)
-            { color: 'G' }, { color: 'G' }, { color: 'G' },
-            { color: 'G' }, { color: 'G' }, { color: 'G' },
-            { color: 'G' }, { color: 'G' }, { color: 'G' }
-        ]
-    ];
-}
-
-function update2DCube(face, clockwise) {
-    const faceMap = {
-        0: [2, 3, 4, 5], // Left face affects top, bottom, back, and front faces
-        1: [2, 5, 3, 4], // Right face affects top, front, bottom, and back faces
-        2: [0, 5, 1, 4], // Top face affects left, front, right, and back faces
-        3: [0, 4, 1, 5], // Bottom face affects left, back, right, and front faces
-        4: [2, 0, 3, 1], // Back face affects top, left, bottom, and right faces
-        5: [2, 1, 3, 0]  // Front face affects top, right, bottom, and left faces
-    };
-
-    const rowMap = {
-        0: [[6, 3, 0], [8, 5, 2]], // Left face row positions
-        1: [[8, 5, 2], [6, 3, 0]], // Right face row positions
-        2: [[0, 1, 2], [0, 1, 2]], // Top face row positions
-        3: [[6, 7, 8], [6, 7, 8]], // Bottom face row positions
-        4: [[0, 3, 6], [8, 5, 2]], // Back face row positions
-        5: [[8, 7, 6], [0, 3, 6]]  // Front face row positions
-    };
-
-    function rotateFace(faceArray, cw) {
-        const rotated = new Array(9);
-        const map = cw ? [6, 3, 0, 7, 4, 1, 8, 5, 2] : [2, 5, 8, 1, 4, 7, 0, 3, 6];
-        for (let i = 0; i < 9; i++) {
-            rotated[i] = faceArray[map[i]];
-        }
-        return rotated;
-    }
-
-    // Rotate the main face
-    _2DCube[face] = rotateFace(_2DCube[face], clockwise);
-
-    // Update the adjacent rows
-    const adjacentFaces = faceMap[face];
-    const currentRows = adjacentFaces.map((adjFace, i) => {
-        const row = rowMap[face][i % 2];
-        return row.map(index => _2DCube[adjFace][index]);
-    });
-
-    if (clockwise) {
-        for (let i = 0; i < 4; i++) {
-            const next = (i + 1) % 4;
-            const row = rowMap[face][i % 2];
-            row.forEach((index, j) => {
-                _2DCube[adjacentFaces[next]][index] = currentRows[i][j];
-            });
-        }
-    } else {
-        for (let i = 3; i >= 0; i--) {
-            const next = (i + 1) % 4;
-            const row = rowMap[face][i % 2];
-            row.forEach((index, j) => {
-                _2DCube[adjacentFaces[next]][index] = currentRows[i][j];
-            });
-        }
-    }
-
-    // Log the updated 2D cube state
-    console.log('Updated _2DCube state:', _2DCube);
-}
-
 
 function solveCube() {
     console.log('Solve function called');
@@ -236,8 +113,6 @@ function solveCube() {
 document.ondragstart = function () { return false; }
 window.addEventListener('load', function() {
     assembleCube();
-     _2DCube = getInitialCubeState();
-	 console.log(_2DCube)
 });
 
 scene.addEventListener('mousedown', mousedown);
