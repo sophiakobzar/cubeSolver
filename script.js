@@ -105,9 +105,147 @@ function mousedown(md_e) {
     scene.removeEventListener('mousedown', mousedown);
 }
 
+function getCubeState() {
+    // Initialize a 3D array to represent the cube
+    var cubeState = new Array(6);
+    for (var i = 0; i < 6; i++) {
+        cubeState[i] = new Array(3);
+        for (var j = 0; j < 3; j++) {
+            cubeState[i][j] = new Array(3);
+        }
+    }
+
+    // Iterate over each piece
+    for (var i = 0; i < pieces.length; i++) {
+        var piece = pieces[i];
+
+        // Iterate over each element of the piece
+        for (var j = 0; j < piece.children.length; j++) {
+            var element = piece.children[j];
+
+            // If the element has a sticker (child div), get its color
+            if (element.firstChild) {
+                var color = element.firstChild.className.split(' ')[1];
+
+                // Convert the color to a number for easier processing later
+                var colorNum = colors.indexOf(color);
+
+                // Update the cube state
+                cubeState[j][i % 3][Math.floor(i / 3)] = colorNum;
+            }
+        }
+    }
+
+    return cubeState;
+}
+
+function solveLayer1(cubeState) {
+    var solution = [];
+
+    // Step 1: Solve the cross
+    // This will depend on the current state of the cube.
+    // You'll need to add moves to the solution to get a cross on the top face.
+    // For now, let's assume that we need to rotate the Front face clockwise and then the Right face clockwise.
+    solution.push('F');
+    //solution.push('R');
+
+    // Step 2: Position the corners
+    // This will also depend on the current state of the cube.
+    // You'll need to add more moves to the solution to get the corners in the right position.
+    // For now, let's assume that we need to rotate the Up face clockwise.
+    //solution.push('U');
+
+    return solution;
+}
+
+function solveLayer2(cubeState) {
+    // This is where you would implement your solving algorithm.
+    // For now, let's just return a dummy solution.
+    return [];
+}
+function solveLayer3(cubeState) {
+    // This is where you would implement your solving algorithm.
+    // For now, let's just return a dummy solution.
+    return [];
+}
+
+function executeSolution(solution) {
+    // Iterate over each move in the solution
+    for (var i = 0; i < solution.length; i++) {
+        // Get the current move
+        var move = solution[i];
+
+        // Determine the face to rotate and the direction
+        var face, cw;
+        switch (move) {
+            case 'U':
+                face = 0; // Up face
+                cw = 1; // Clockwise
+                break;
+            case "U'":
+                face = 0; // Up face
+                cw = 0; // Counterclockwise
+                break;
+            case 'D':
+                face = 1; // Down face
+                cw = 1; // Clockwise
+                break;
+            case "D'":
+                face = 1; // Down face
+                cw = 0; // Counterclockwise
+                break;
+            case 'L':
+                face = 2; // Left face
+                cw = 1; // Clockwise
+                break;
+            case "L'":
+                face = 2; // Left face
+                cw = 0; // Counterclockwise
+                break;
+            case 'R':
+                face = 3; // Right face
+                cw = 1; // Clockwise
+                break;
+            case "R'":
+                face = 3; // Right face
+                cw = 0; // Counterclockwise
+                break;
+            case 'F':
+                face = 4; // Front face
+                cw = 1; // Clockwise
+                break;
+            case "F'":
+                face = 4; // Front face
+                cw = 0; // Counterclockwise
+                break;
+            case 'B':
+                face = 5; // Back face
+                cw = 1; // Clockwise
+                break;
+            case "B'":
+                face = 5; // Back face
+                cw = 0; // Counterclockwise
+                break;
+        }
+
+        // Execute the move
+        animateRotation(face, cw, Date.now());
+    }
+}
 
 function solveCube() {
-    console.log('Solve function called');
+    // Get the current state of the cube
+    var cubeState = getCubeState();
+
+    // Solve each layer and execute the solution
+    var solution1 = solveLayer1(cubeState);
+    executeSolution(solution1);
+
+    var solution2 = solveLayer2(cubeState);
+    executeSolution(solution2);
+
+    var solution3 = solveLayer3(cubeState);
+    executeSolution(solution3);
 }
 
 document.ondragstart = function () { return false; }
