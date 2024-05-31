@@ -139,34 +139,153 @@ function getCubeState() {
     return cubeState;
 }
 
+function isCrossFormed(cubeState) {
+    // Assuming the top face is at index 0
+    var topFace = cubeState[0];
+
+    // Check the edge positions (up, down, left, right) of the top face
+    if (topFace[0][1] === topFace[1][1] && topFace[1][1] === topFace[2][1] && 
+        topFace[1][0] === topFace[1][1] && topFace[1][2] === topFace[1][1]) {
+        return true;
+    }
+
+    return false;
+}
+
+function areCornersCorrect(cubeState) {
+    // Get the color of the center piece of the top face
+    var topColor = cubeState[0][1][1];
+
+    // Get the colors of the center pieces of the adjacent faces
+    var frontColor = cubeState[1][1][1];
+    var rightColor = cubeState[2][1][1];
+    var backColor = cubeState[3][1][1];
+    var leftColor = cubeState[4][1][1];
+
+    // Check if the corner pieces match the center pieces
+    if (cubeState[0][0][0] !== topColor || cubeState[1][0][2] !== frontColor || cubeState[4][0][0] !== leftColor ||  // Front-left corner
+        cubeState[0][0][2] !== topColor || cubeState[1][0][0] !== frontColor || cubeState[2][0][2] !== rightColor ||  // Front-right corner
+        cubeState[0][2][2] !== topColor || cubeState[2][0][0] !== rightColor || cubeState[3][0][2] !== backColor ||  // Back-right corner
+        cubeState[0][2][0] !== topColor || cubeState[3][0][0] !== backColor || cubeState[4][0][2] !== leftColor) {  // Back-left corner
+        return false;
+    }
+
+    return true;
+}
+
+
 function solveLayer1(cubeState) {
     var solution = [];
 
     // Step 1: Solve the cross
-    // This will depend on the current state of the cube.
-    // You'll need to add moves to the solution to get a cross on the top face.
-    // For now, let's assume that we need to rotate the Front face clockwise and then the Right face clockwise.
-    solution.push('F');
-    //solution.push('R');
+    var topColor = cubeState[0][1][1]; // Center color of the top face
+
+    function applyMove(cubeState, move) {
+        // Apply the move to the cube state (update cubeState)
+        // For simplicity, we're just updating the solution list here
+        solution.push(move);
+    }
+
+    function moveEdgeToTop(face, edgePos, targetPos) {
+        // Example logic to move an edge piece to the top face
+        // This is simplified and needs to be expanded for all possible positions
+
+        if (face === 1) {
+            if (edgePos[0] === 1 && edgePos[1] === 0) { // Left middle edge
+                applyMove(cubeState, 'L');
+                applyMove(cubeState, 'U');
+                applyMove(cubeState, 'L\'');
+            } else if (edgePos[0] === 1 && edgePos[1] === 2) { // Right middle edge
+                applyMove(cubeState, 'R');
+                applyMove(cubeState, 'U');
+                applyMove(cubeState, 'R\'');
+            }
+            // Add other cases for face 1 edges here
+        } else if (face === 2) {
+            if (edgePos[0] === 0 && edgePos[1] === 1) { // Top middle edge
+                applyMove(cubeState, 'U');
+                applyMove(cubeState, 'B\'');
+                applyMove(cubeState, 'U\'');
+                applyMove(cubeState, 'B');
+            }
+            // Add other cases for face 2 edges here
+        }
+        // Add cases for other faces (3, 4, 5)
+    }
+
+    // Loop through the faces to find and move the edge pieces to form a cross on the top face
+    for (var face = 1; face <= 5; face++) {
+        for (var j = 0; j < 3; j++) {
+            for (var k = 0; k < 3; k++) {
+                if ((j === 1 || k === 1) && cubeState[face][j][k] === topColor) {
+                    moveEdgeToTop(face, [j, k], [0, 1, 1]); // Example target position, needs actual target
+                }
+            }
+        }
+    }
 
     // Step 2: Position the corners
-    // This will also depend on the current state of the cube.
-    // You'll need to add more moves to the solution to get the corners in the right position.
-    // For now, let's assume that we need to rotate the Up face clockwise.
-    //solution.push('U');
+    function positionCorner(cornerPos, targetPos) {
+        // Example logic to position a corner piece correctly
+        // This needs to be expanded to handle all possible corner positions and rotations
+        applyMove(cubeState, 'R');
+        applyMove(cubeState, 'U');
+        applyMove(cubeState, 'R\'');
+        // Add actual logic for correct corner positioning
+    }
+
+    // Example of corner movements
+    var cornerPositions = [
+        [[0, 0, 0], [1, 2, 0]], // Example positions, replace with actual positions
+        [[0, 0, 2], [1, 2, 2]],
+        [[0, 2, 0], [1, 0, 0]],
+        [[0, 2, 2], [1, 0, 2]]
+    ];
+
+    cornerPositions.forEach(function(pos) {
+        positionCorner(pos[0], pos[1]);
+    });
 
     return solution;
 }
 
 function solveLayer2(cubeState) {
-    // This is where you would implement your solving algorithm.
-    // For now, let's just return a dummy solution.
-    return [];
+    var solution = [];
+    
+    // The middle layer edges are placed between faces 1, 2, 3, and 4.
+    
+    // Find each middle layer edge piece and place it correctly
+    for (var i = 1; i <= 4; i++) { // Faces 1 to 4
+        for (var j = 0; j < 3; j++) {
+            for (var k = 0; k < 3; k++) {
+                if ((j == 1 && k != 1) || (k == 1 && j != 1)) { // Only check edges
+                    var edgePiece = cubeState[i][j][k];
+                    // Move the edge piece to the middle layer
+                    // This will involve checking the current position of the edge
+                    // and using algorithms to move it to the correct middle layer position
+                }
+            }
+        }
+    }
+
+    return solution;
 }
 function solveLayer3(cubeState) {
-    // This is where you would implement your solving algorithm.
-    // For now, let's just return a dummy solution.
-    return [];
+    var solution = [];
+    
+    // Step 1: Orient the last layer edges
+    // This step involves using algorithms to orient the top edges correctly.
+    
+    // Step 2: Permute the last layer edges
+    // Use algorithms to permute the edges correctly.
+
+    // Step 3: Orient the last layer corners
+    // Use algorithms to orient the top corners correctly.
+
+    // Step 4: Permute the last layer corners
+    // Finally, permute the corners to solve the cube.
+
+    return solution;
 }
 
 function executeSolution(solution) {
@@ -241,11 +360,11 @@ function solveCube() {
     var solution1 = solveLayer1(cubeState);
     executeSolution(solution1);
 
-    var solution2 = solveLayer2(cubeState);
-    executeSolution(solution2);
+    //var solution2 = solveLayer2(cubeState);
+    //executeSolution(solution2);
 
-    var solution3 = solveLayer3(cubeState);
-    executeSolution(solution3);
+    //var solution3 = solveLayer3(cubeState);
+    //executeSolution(solution3);
 }
 
 document.ondragstart = function () { return false; }
