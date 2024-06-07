@@ -1,19 +1,28 @@
-# cubeSolver
+# 3D Rubik's Cube Solver
 
-## Description
-
-This is a web application that allows users to solve their Rubik's Cube puzzles. Users can input their cube's current configuration, and the application will provide a step-by-step solution. Alternatively, users can generate a random solvable cube and watch the application solve it.
+This project is a 3D Rubik's Cube simulation and solver. It provides an interactive 3D representation of a Rubik's Cube that you can manipulate and solve with a built-in algorithm.
 
 ## Features
 
-- 3D representation of a Rubik's Cube
-- Cube configuration input
-- Cube configuration validation
-- Step-by-step solution
-- Random solvable cube generation
+- **3D Representation**: Visualize and interact with a Rubik's Cube in 3D.
+- **Mouse Controls**: Rotate the cube and move pieces using mouse interactions.
+- **Solver**: Automatically solve the cube using the built-in algorithm.
 
-## Visit
-https://cubeconqueror.com/
+## Technologies Used
 
+- **HTML/CSS/JavaScript**: Core technologies for building the interactive interface.
+- **3D Transformations**: CSS 3D transformations for creating the 3D effect.
 
+## Getting Started
 
+### Prerequisites
+
+To run this project, you need a modern web browser that supports HTML5, CSS3, and JavaScript.
+
+### Installation
+
+1. **Clone the repository**:
+
+   ```sh
+   git clone https://github.com/your-username/3d-rubiks-cube-solver.git
+   cd 3d-rubiks-cube-solver
