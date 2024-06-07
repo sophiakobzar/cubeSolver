@@ -24,5 +24,5 @@ To run this project, you need a modern web browser that supports HTML5, CSS3, an
 1. **Clone the repository**:
 
    ```sh
-   git clone https://github.com/your-username/3d-rubiks-cube-solver.git
-   cd 3d-rubiks-cube-solver
+   git clone https://github.com/sophiakobzar/cubeSolver.git
+   cd cubeSolver
